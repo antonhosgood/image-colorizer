@@ -5,10 +5,20 @@ from src.api.lorem_picsum import LoremPicsum
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("output", type=str)
-    parser.add_argument("width", type=int)
-    parser.add_argument("height", type=int)
+    parser = argparse.ArgumentParser(
+        description="Download a dataset of color and grayscale images from the Lorem Picsum API."
+    )
+    parser.add_argument(
+        "output",
+        type=str,
+        help="Path to the output directory where the dataset will be saved.",
+    )
+    parser.add_argument(
+        "width", type=int, help="Width (in pixels) of the images to download."
+    )
+    parser.add_argument(
+        "height", type=int, help="Height (in pixels) of the images to download."
+    )
 
     args = parser.parse_args()
     width = args.width

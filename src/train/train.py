@@ -59,8 +59,10 @@ def train(config_path: PathLike[AnyStr] | AnyStr) -> None:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("config", type=str)
+    parser = argparse.ArgumentParser(
+        description="Train and validate an image-to-image model."
+    )
+    parser.add_argument("config", type=str, help="Path to configuration file.")
     args = parser.parse_args()
 
     train(args.config)
