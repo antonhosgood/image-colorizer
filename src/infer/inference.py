@@ -1,3 +1,4 @@
+import argparse
 from os import PathLike
 from pathlib import Path
 from typing import AnyStr, Optional, Tuple
@@ -7,6 +8,11 @@ import torch
 from PIL import Image
 from torch import nn
 from torchvision.transforms import v2
+
+from src.models.unet import UNet
+from src.utils.checkpoint import load_checkpoint
+from src.utils.config import load_config
+from src.utils.device import get_device
 
 
 def preprocess_image(
@@ -97,3 +103,41 @@ def inference(
         postprocess_and_save(output, output_path)
     else:
         show_side_by_side(input_tensor, output)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Colorize a grayscale image using a trained model."
+    )
+    parser.add_argument("config", type=str, help="Path to YAML config file.")
+    parser.add_argument("input", type=str, help="Path to grayscale image.")
+    parser.add_argument(
+        "checkpoint", type=str, help="Path to trained model checkpoint (.pth)."
+    )
+    parser.add_argument(
+        "--output",
+        type=str,
+        default=None,
+        help="Optional path to save the colorized image.",
+    )
+
+    args = parser.parse_args()
+
+    config = load_config(args.config)
+    device = get_device()
+    resize = tuple(config["image_size"]) if "image_size" in config else None
+
+    model = UNet().to(device)
+    load_checkpoint(model, args.checkpoint)
+
+    inference(
+        model=model,
+        device=device,
+        input_path=args.input,
+        output_path=args.output,
+        resize=resize,
+    )
+
+
+if __name__ == "__main__":
+    main()
