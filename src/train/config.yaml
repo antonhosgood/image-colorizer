@@ -1,0 +1,22 @@
+color_dir: "data/stock_images_256x256/color"
+grayscale_dir: "data/stock_images_256x256/grayscale"
+
+num_epochs: 10
+batch_size: 16
+val_ratio: 0.2
+
+# Optimizer
+learning_rate: 0.001
+# Scheduler
+step_size: 5
+gamma: 0.1
+
+clip_grad:
+  enabled: true
+  max_norm: 1.0
+
+checkpoint:
+  dir: "checkpoints/unet"
+  interval: 5
+
+seed: 42
