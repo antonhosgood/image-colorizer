@@ -55,8 +55,7 @@ Standalone utility scripts.
 2. Create a **Python 3.13 or higher** virtual environment (optional but recommended):
 
    ```bash
-   python3 --version  # Ensure you have Python 3.13+ installed
-   python3 -m venv .venv
+   python3.13 -m venv .venv
    source .venv/bin/activate
    ```
 
